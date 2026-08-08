@@ -6309,438 +6309,386 @@ blockquote {
 
 
 
-/* ==========================================================================
-   NAVIGATION BAR STYLES
-   ========================================================================== */
 
-.site-header {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 9999;
-  background: rgba(12, 12, 14, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.3s ease;
-}
 
-.navbar-container {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
-.nav-logo {
-  font-family: 'Archivo', sans-serif;
-  font-size: 24px;
-  font-weight: 800;
-  color: #ffffff !important;
-  text-decoration: none;
-  letter-spacing: -0.5px;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
+/* ================================================================
+   CRITICAL MOBILE FIX: Force all Webflow animation-hidden elements
+   visible. Webflow sets opacity:0 and transforms inline which the
+   JS engine re-animates - without the CDN JS these stay hidden.
+   ================================================================ */
 
-.logo-accent { color: #D4AF37 !important; }
-
-.nav-menu {
-  display: flex;
-  align-items: center;
-}
-
-.nav-list {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-link {
-  font-family: 'Archivo', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.75) !important;
-  text-decoration: none;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  transition: color 0.25s ease, opacity 0.25s ease;
-  position: relative;
-  padding: 6px 0;
+/* Override the Webflow animation init class on html */
+html.w-mod-ix *[style*="opacity: 0"],
+html.w-mod-ix *[style*="opacity:0"] {
   opacity: 1 !important;
-  transform: none !important;
 }
 
-.nav-link:hover,
-.nav-link.active {
-  color: #ffffff !important;
+/* Force all transform-hidden elements visible */
+*[style*="opacity: 0"] {
+  opacity: 1 !important;
 }
 
-.nav-link.active::after,
-.nav-link:hover::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #4ade80;
-  border-radius: 2px;
+/* Force all translated-away elements back */
+*[style*="translate3d(0px, 100%"],
+*[style*="translate3d(0px, 50%"],
+*[style*="translate3d(0%, 100%"],
+*[style*="translate3d(0%, 50%"],
+*[style*="translate3d(100%"],
+*[style*="translate3d(-100%"] {
+  transform: translate3d(0px, 0px, 0px) !important;
 }
 
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.btn-hire {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 22px;
-  background-color: #4ade80;
-  color: #09090b !important;
-  font-family: 'Archivo', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: 50px;
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 14px rgba(74, 222, 128, 0.25);
-}
-
-.btn-hire:hover {
-  background-color: #22c55e;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(74, 222, 128, 0.4);
-}
-
-.mobile-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 28px;
-  height: 18px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 10000;
-}
-
-.mobile-toggle .bar {
-  width: 100%;
-  height: 2px;
-  background-color: #ffffff;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-@media (max-width: 868px) {
-  .mobile-toggle {
-    display: flex;
-  }
-
-  .nav-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 280px;
-    height: 100vh;
-    background: rgba(15, 15, 18, 0.98);
-    backdrop-filter: blur(20px);
-    padding: 100px 32px 40px;
-    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
-  }
-
-  .nav-menu.is-active {
-    right: 0;
-  }
-
-  .nav-list {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-  }
-
-  .nav-link {
-    font-size: 16px;
-  }
-}
-
-/* Ensure Nav CTA Button matches Primary Know More Button */
-.primary-button.nav-btn {
-  display: flex !important;
-  width: 145px !important;
-  height: 44px !important;
-  grid-column-gap: 12px !important;
-  align-items: center !important;
-  justify-content: center !important;
-  position: relative !important;
-  text-decoration: none !important;
-  z-index: 10 !important;
-  margin: 0 !important;
-  padding: 0 16px !important;
-  border-radius: 4px !important;
-  overflow: hidden !important;
-  background-color: transparent !important;
-}
-
-.primary-button.nav-btn .primary-btn-text {
-  color: #ffffff !important;
-  font-family: inherit !important;
-  font-size: 14px !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  z-index: 2 !important;
-  position: relative !important;
-}
-
-.primary-button.nav-btn .right-arrow {
-  z-index: 2 !important;
-  position: relative !important;
-  width: 14px !important;
-  height: auto !important;
-  transition: transform 0.3s ease !important;
-}
-
-.primary-button.nav-btn:hover .right-arrow {
-  transform: translateX(4px) !important;
-}
-
-.primary-button.nav-btn .primary-btn-bg {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%) !important;
-  z-index: 1 !important;
-  border-radius: 4px !important;
-  transition: opacity 0.3s ease !important;
-}
-
-.primary-button.nav-btn:hover .primary-btn-bg {
-  opacity: 0.9 !important;
-}
-
-/* Golden Floating WhatsApp Button */
-.whatsapp-float-btn {
-  position: fixed !important;
-  bottom: 24px !important;
-  right: 24px !important;
-  width: 56px !important;
-  height: 56px !important;
-  background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%) !important;
-  color: #ffffff !important;
-  border-radius: 50% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
-  z-index: 9999 !important;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-  text-decoration: none !important;
-}
-.whatsapp-float-btn:hover {
-  transform: scale(1.1) translateY(-3px) !important;
-  box-shadow: 0 12px 28px rgba(212, 175, 55, 0.6), 0 6px 16px rgba(0, 0, 0, 0.5) !important;
-  color: #ffffff !important;
-}
-
-
-
-/* ==========================================================================
-   COMPREHENSIVE MOBILE & RESPONSIVE OPTIMIZATION (ALL DEVICES)
-   ========================================================================== */
-
-/* Prevent horizontal overflow on mobile devices */
-html, body {
-  overflow-x: hidden !important;
-  width: 100% !important;
-  position: relative !important;
-}
-
-.page-wrapper, .main-wrapper, .section, .container {
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-/* Force visibility on all Webflow animation elements */
-[data-w-id],
-.hero-block-wrapper,
-.hero-main-text,
+/* Ensure all primary content blocks are visible */
+.hero-heading,
 .hero-category-text,
 .hero-sub-category-text,
-.hero-image,
-.hero-image-left,
-.hero-image-right,
-.hero-gridbox,
+.hero-main-text,
+.work-category-text,
+.home-service-title,
+.home-service-text,
+.number-heading,
+.section-heading,
+.blog-post-title,
+.author-card,
 .work-item,
-.service-item,
-.contact-form-wrapper,
-.form-container,
-.hero-heading {
+.primary-button,
+.primary-btn-text,
+.home-work-heading,
+[data-w-id] {
   opacity: 1 !important;
   visibility: visible !important;
   transform: none !important;
+  animation: none !important;
 }
 
-/* Header Navbar Mobile Adaptations */
-@media screen and (max-width: 991px) {
+/* Works page specific - ensure all content visible */
+.hero_heading-wrapper,
+.hero_text-wrapper,
+.work-categories,
+.nav_link-wrapper,
+.section_header,
+.services-list,
+.section-text,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.heading-style-h1,
+.heading-style-h2,
+.heading-style-h3,
+.text-size-large,
+.text-size-medium,
+.text-size-small,
+.text-weight-semibold,
+.text-colour-primary,
+.text-colour-secondary,
+.max-width-full,
+.padding-global,
+.padding-section-large,
+.padding-section-medium,
+.container-large,
+.container-medium,
+.container-small {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* ==============================================================
+   RESPONSIVE LAYOUT FIXES FOR MOBILE
+   ============================================================== */
+
+/* Box sizing for all elements */
+*, *::before, *::after {
+  box-sizing: border-box !important;
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+/* Make images responsive */
+img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Fix grid/flex overflows */
+.section,
+.container,
+.padding-global,
+.w-layout-blockcontainer,
+.w-container {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* ================================================================
+   MOBILE NAVBAR (< 768px)
+   ================================================================ */
+@media screen and (max-width: 768px) {
   .site-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10000 !important;
     padding: 10px 16px !important;
+    background: rgba(10, 10, 10, 0.92) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
   }
 
   .navbar-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
     padding: 0 !important;
+    gap: 12px !important;
   }
 
   .nav-logo {
-    font-size: 1.2rem !important;
-  }
-
-  .mobile-toggle {
-    display: flex !important;
+    font-size: 1.1rem !important;
+    flex-shrink: 0 !important;
+    z-index: 10001 !important;
+    position: relative !important;
   }
 
   .nav-menu {
-    position: fixed !important;
-    top: 70px !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: calc(100vh - 70px) !important;
-    background: rgba(18, 18, 18, 0.96) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    padding-top: 40px !important;
-    transform: translateY(-150%) !important;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    z-index: 998 !important;
     display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(8, 8, 8, 0.97) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 80px 24px 40px !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    z-index: 9998 !important;
+    pointer-events: none !important;
   }
 
   .nav-menu.is-active {
-    transform: translateY(0) !important;
+    transform: translateX(0%) !important;
+    pointer-events: all !important;
   }
 
   .nav-list {
     flex-direction: column !important;
-    gap: 24px !important;
-    text-align: center !important;
+    align-items: center !important;
+    gap: 20px !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
     width: 100% !important;
+  }
+
+  .nav-item {
+    width: 100% !important;
+    text-align: center !important;
   }
 
   .nav-link {
-    font-size: 1.2rem !important;
-    padding: 12px 24px !important;
     display: block !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 3px !important;
+    padding: 16px 24px !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    transition: color 0.2s ease !important;
+  }
+
+  .nav-link.active,
+  .nav-link:hover {
+    color: #D4AF37 !important;
+  }
+
+  .nav-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    position: relative !important;
+    z-index: 10001 !important;
   }
 
   .primary-button.nav-btn {
-    display: flex !important;
-    width: 120px !important;
-    height: 38px !important;
-    padding: 0 10px !important;
-  }
-  
-  .primary-button.nav-btn .primary-btn-text {
-    font-size: 12px !important;
-  }
-}
-
-/* Mobile Typography & Grid Layout Fixes */
-@media screen and (max-width: 767px) {
-  /* Headings & Giant Text Scaling */
-  h1, .h1, .hero-heading, .hero-main-text, .footer-heading {
-    font-size: 2.2rem !important;
-    line-height: 1.2 !important;
-    word-break: break-word !important;
+    display: none !important;
   }
 
-  h2, .h2, .form-heading {
-    font-size: 1.8rem !important;
-    line-height: 1.25 !important;
-  }
-
-  h3, .h3 {
-    font-size: 1.4rem !important;
-  }
-
-  /* Grid Layouts to Single Column */
-  .hero-grid,
-  .hero-block-wrapper,
-  .work-grid,
-  .works-list,
-  .service-grid,
-  .form-container,
-  .testimonial-grid,
-  .footer-flex,
-  .contact-form-wrapper {
+  .mobile-toggle {
     display: flex !important;
     flex-direction: column !important;
-    grid-template-columns: 1fr !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 6px !important;
+    z-index: 10001 !important;
+    position: relative !important;
+  }
+
+  .mobile-toggle .bar {
+    display: block !important;
+    width: 26px !important;
+    height: 2px !important;
+    background: #fff !important;
+    border-radius: 2px !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .mobile-toggle.is-active .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg) !important;
+  }
+  .mobile-toggle.is-active .bar:nth-child(2) {
+    opacity: 0 !important;
+    transform: scale(0) !important;
+  }
+  .mobile-toggle.is-active .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg) !important;
+  }
+
+  /* Mobile Hero content */
+  .section.margin-around,
+  .section {
+    padding: 20px 16px !important;
+  }
+
+  .hero-heading {
+    font-size: clamp(2rem, 8vw, 3rem) !important;
+    line-height: 1.15 !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* Fix all grid layouts on mobile */
+  .grid,
+  .home-work-grid,
+  .work-grid,
+  .works-list,
+  .services-grid,
+  .blog-grid,
+  .footer-flex {
+    display: flex !important;
+    flex-direction: column !important;
     gap: 24px !important;
     width: 100% !important;
   }
 
-  /* Image Responsiveness */
-  img, .hero-image, .hero-image-left, .hero-image-right, .work-image {
-    max-width: 100% !important;
-    height: auto !important;
-    object-fit: cover !important;
-    border-radius: 8px !important;
-  }
-
-  /* Form Fields & Buttons */
-  .input-field, .form-field-input, textarea {
+  /* Works page hero fix */
+  .hero_component,
+  .hero_content,
+  .hero_image-wrapper {
     width: 100% !important;
-    box-sizing: border-box !important;
-    font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
-    padding: 14px 16px !important;
+    max-width: 100% !important;
   }
 
-  /* Floating WhatsApp Button on Mobile */
+  /* Services page layout fix */
+  .secondary-grid,
+  .services-content-wrapper,
+  .service-wrapper {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    width: 100% !important;
+  }
+
+  /* Form & input fix */
+  input, textarea, select, .form-field-input {
+    width: 100% !important;
+    font-size: 16px !important; /* Prevents iOS auto-zoom */
+    min-height: 44px !important;
+  }
+
+  /* WhatsApp button position */
   .whatsapp-float-btn {
     bottom: 16px !important;
     right: 16px !important;
     width: 50px !important;
     height: 50px !important;
   }
-  
-  .whatsapp-float-btn svg {
-    width: 24px !important;
-    height: 24px !important;
+}
+
+/* Tablet (768 - 991px) */
+@media screen and (min-width: 769px) and (max-width: 991px) {
+  .mobile-toggle {
+    display: flex !important;
+  }
+
+  .primary-button.nav-btn {
+    display: flex !important;
+    width: 120px !important;
+    height: 40px !important;
+    font-size: 12px !important;
+  }
+
+  .nav-menu {
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 320px !important;
+    height: 100vh !important;
+    background: rgba(8, 8, 8, 0.97) !important;
+    backdrop-filter: blur(20px) !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 60px 24px !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    z-index: 9998 !important;
+    pointer-events: none !important;
+    display: flex !important;
+  }
+
+  .nav-menu.is-active {
+    transform: translateX(0%) !important;
+    pointer-events: all !important;
+  }
+
+  .nav-list {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  .nav-link {
+    font-size: 1.2rem !important;
   }
 }
 
-@media screen and (max-width: 479px) {
-  .section, .margin-around {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+/* Desktop (> 991px) */
+@media screen and (min-width: 992px) {
+  .mobile-toggle {
+    display: none !important;
   }
 
-  h1, .h1, .hero-heading, .hero-main-text {
-    font-size: 1.8rem !important;
+  .nav-menu {
+    position: static !important;
+    transform: none !important;
+    background: transparent !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    pointer-events: all !important;
   }
 
-  .primary-button, .btn {
-    width: 100% !important;
-    justify-content: center !important;
+  .nav-list {
+    flex-direction: row !important;
+    gap: 32px !important;
+  }
+
+  .primary-button.nav-btn {
+    display: flex !important;
   }
 }
